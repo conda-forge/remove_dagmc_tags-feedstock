@@ -7,20 +7,20 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: e3e16c6ad219c1764db5db4236d326b4a022b2d62c98475c9318a9e9faa82b72
 
 build:
-  number: 2
-  skip: true  # [win]
+  number: 3
+  noarch: python
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - moab
     - numpy
 
@@ -33,6 +33,7 @@ test:
     - tests/dagmc.h5m
   requires:
     - pytest
+    - python {{ python_min }}
   commands:
     - pytest tests
 
