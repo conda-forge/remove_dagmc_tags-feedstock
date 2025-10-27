@@ -12,15 +12,15 @@ source:
 
 build:
   number: 3
-  skip: true  # [win]
+  noarch: python
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - moab
     - numpy
 
@@ -33,6 +33,7 @@ test:
     - tests/dagmc.h5m
   requires:
     - pytest
+    - python {{ python_min }}
   commands:
     - pytest tests
 
